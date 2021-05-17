@@ -25,8 +25,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 1,
-  "iteration": 1621098681551,
+  "id": 6,
+  "iteration": 1621271688418,
   "links": [],
   "panels": [
     {
@@ -92,7 +92,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "expr": "chia_harvester_proofs_total",
@@ -151,7 +151,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "expr": "chia_harvester_plots_total",
@@ -208,7 +208,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -320,7 +320,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "exemplar": true,
@@ -375,7 +375,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -494,7 +494,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -643,7 +643,7 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "exemplar": true,
@@ -703,7 +703,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -827,7 +827,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "exemplar": true,
@@ -847,7 +847,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -966,27 +966,123 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "expr": "chia_blockchain_sync_status",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
           "hide": false,
           "interval": "",
           "legendFormat": "status",
-          "refId": "B"
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         },
         {
           "expr": "chia_peers_count{type=\"1\"}",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
           "interval": "",
           "legendFormat": "peers",
-          "refId": "A"
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         },
         {
           "expr": "chia_blockchain_space_bytes",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
           "hide": false,
           "interval": "",
           "legendFormat": "netspace",
-          "refId": "C"
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Node Status",
@@ -1044,7 +1140,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "exemplar": true,
@@ -1114,7 +1210,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1273,7 +1369,7 @@
       "type": "logs"
     }
   ],
-  "refresh": "1m",
+  "refresh": "5s",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -1283,10 +1379,10 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "localhost:9100",
-          "value": "localhost:9100"
+          "text": "192.168.12.13:9100",
+          "value": "192.168.12.13:9100"
         },
-        "datasource": null,
+        "datasource": "Prometheus",
         "definition": "label_values(node_filesystem_size_bytes, instance)",
         "description": null,
         "error": null,
@@ -1315,13 +1411,21 @@
         "current": {
           "selected": true,
           "text": [
-            "/"
+            "/opt/hdd/1",
+            "/opt/hdd/2",
+            "/opt/hdd/3",
+            "/opt/hdd/4",
+            "/opt/ssd/1"
           ],
           "value": [
-            "/"
+            "/opt/hdd/1",
+            "/opt/hdd/2",
+            "/opt/hdd/3",
+            "/opt/hdd/4",
+            "/opt/ssd/1"
           ]
         },
-        "datasource": null,
+        "datasource": "Prometheus",
         "definition": "label_values(node_filesystem_size_bytes, mountpoint)",
         "description": null,
         "error": null,
@@ -1350,13 +1454,21 @@
         "current": {
           "selected": true,
           "text": [
-            "All"
+            "nvme0n1",
+            "sdb",
+            "sdc",
+            "sdd",
+            "sde"
           ],
           "value": [
-            "$__all"
+            "nvme0n1",
+            "sdb",
+            "sdc",
+            "sdd",
+            "sde"
           ]
         },
-        "datasource": null,
+        "datasource": "Prometheus",
         "definition": "label_values(node_disk_io_time_seconds_total, device)",
         "description": null,
         "error": null,
@@ -1385,13 +1497,13 @@
         "current": {
           "selected": true,
           "text": [
-            "All"
+            "enp0s31f6"
           ],
           "value": [
-            "$__all"
+            "enp0s31f6"
           ]
         },
-        "datasource": null,
+        "datasource": "Prometheus",
         "definition": "label_values(node_network_receive_bytes_total, device)",
         "description": null,
         "error": null,
@@ -1418,12 +1530,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Chia",
   "uid": "P-ipES9Mz",
-  "version": 2
+  "version": 9
 }
+
