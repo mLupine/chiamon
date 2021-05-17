@@ -20,7 +20,7 @@ services:
       - '/:/host:ro,rslave'
     network_mode: host
   chia_exporter:
-    build: chia_exporter
+    build: chia-exporter
     command:
       - "-cert"
       - "/etc/chia.crt"
@@ -39,7 +39,7 @@ services:
     volumes:
       - ${HOME}/.chia/mainnet/log:/var/log/chia
       - ${HOME}/.chia/mainnet/plotter:/var/log/plotter
-      - ./promtrail/:/etc/promtail/
+      - ./promtail/:/etc/promtail/
     command: -config.file=/etc/promtail/config.yml
     network_mode: host
   process_exporter:
