@@ -30,12 +30,6 @@ services:
       - ${HOME}/.chia/mainnet/config/ssl/full_node/private_full_node.crt:/etc/chia.crt
       - ${HOME}/.chia/mainnet/config/ssl/full_node/private_full_node.key:/etc/chia.key
     network_mode: host
-  prometheus:
-    image: prom/prometheus:v2.27.0
-    volumes:
-      - prom_data:/prometheus
-      - ./prometheus/:/etc/prometheus/
-    network_mode: host
   loki:
     image: grafana/loki:2.0.0
     command: -config.file=/etc/loki/local-config.yaml
@@ -53,13 +47,8 @@ services:
     command:
       - '-procfs=/host/proc'
       - '-config.path=/config/config.yaml'
-      - "-web.listen-address=:9257"
+      - "-web.listen-address=0.0.0.0:9257"
     volumes:
       - /proc:/host/proc
       - ./process-exporter:/config
     network_mode: host
-  grafana:
-    build: grafana
-    network_mode: host
-volumes:
-  prom_data:
