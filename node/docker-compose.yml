@@ -15,9 +15,11 @@ services:
     image: quay.io/prometheus/node-exporter:latest
     command:
       - '--path.rootfs=/host'
+      - '--collector.textfile.directory=/tmp/metrics'
     pid: host
     volumes:
       - '/:/host:ro,rslave'
+      - '/home/m/.prometheus:/tmp/metrics:ro'
     network_mode: host
   chia_exporter:
     build: chia-exporter
