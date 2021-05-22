@@ -3,9 +3,10 @@ services:
   prometheus:
     image: prom/prometheus:v2.27.0
     volumes:
-      - prom_data:/prometheus
+      - prometheus_data:/prometheus
       - ./prometheus/:/etc/prometheus/
     ports:
       - "0.0.0.0:9090:9090"
 volumes:
-  prom_data:
+  prometheus_data:
+    external: true
