@@ -22,11 +22,11 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "gnetId": null,
   "graphTooltip": 1,
   "id": 6,
-  "iteration": 1621271688418,
+  "iteration": 1621676414795,
   "links": [],
   "panels": [
     {
@@ -40,7 +40,7 @@
             {
               "from": "",
               "id": 1,
-              "text": "0 😞",
+              "text": "0 🥺",
               "to": "",
               "type": 1,
               "value": "0"
@@ -48,7 +48,7 @@
             {
               "from": "",
               "id": 2,
-              "text": "1 😃",
+              "text": "1 🤑",
               "to": "",
               "type": 1,
               "value": "1"
@@ -300,7 +300,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
+        "w": 4,
         "x": 0,
         "y": 4
       },
@@ -324,13 +324,77 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "chia_wallet_confirmed_balance_mojo",
+          "expr": "chia_wallet_confirmed_balance_mojo{wallet_id=\"1\"} + chia_wallet_pending_change_mojo{wallet_id=\"1\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
       "title": "Balance",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "green",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 4,
+        "y": 4
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "7.5.6",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "namedprocess_namegroup_num_procs",
+          "interval": "",
+          "legendFormat": "Plots",
+          "refId": "A"
+        }
+      ],
+      "title": "Plotting",
       "type": "stat"
     },
     {
@@ -1118,7 +1182,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 4,
         "x": 8,
         "y": 13
@@ -1309,34 +1373,379 @@
       }
     },
     {
-      "datasource": "Loki",
+      "datasource": "Prometheus",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 5
+              },
+              {
+                "color": "green",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "Not synced",
+                    "to": "",
+                    "type": 1,
+                    "value": "0"
+                  },
+                  {
+                    "from": "",
+                    "id": 2,
+                    "text": "Syncing",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  },
+                  {
+                    "from": "",
+                    "id": 3,
+                    "text": "Synced",
+                    "to": "",
+                    "type": 1,
+                    "value": "2"
+                  }
+                ]
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 2
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "netspace"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 8,
+        "y": 17
+      },
+      "id": 33,
+      "interval": null,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.6",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "chia_blockchain_difficulty",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "difficulty",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "title": "Blockchain difficulty",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 5,
+        "w": 4,
         "x": 0,
         "y": 20
       },
-      "id": 31,
+      "id": 34,
+      "interval": "5s",
+      "links": [],
+      "maxDataPoints": 999999,
       "options": {
-        "dedupStrategy": "none",
-        "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
       },
-      "pluginVersion": "7.5.4",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
-          "expr": "{job=\"chia\"}|=\"harvester.harvester\"|=\"WARNING\"",
-          "refId": "A"
+          "exemplar": true,
+          "expr": "label_join((plotman_plot_phase_major{} + 0.1 * plotman_plot_phase_minor{}), \"val\", \" \", \"plot_id\", \"run_status\", \"tmp_dir\", \"dst_dir\")",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{val}}",
+          "metric": "node_filesystem_size",
+          "refId": "A",
+          "step": 10
         }
       ],
-      "title": "Harvester Warnings",
-      "type": "logs"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Plotting stages",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dthms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 4,
+        "y": 20
+      },
+      "id": 35,
+      "interval": "5s",
+      "links": [],
+      "maxDataPoints": 999999,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.6",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_join(plotman_plot_total_time, \"val\", \" \", \"plot_id\", \"run_status\", \"tmp_dir\", \"dst_dir\")",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{val}}",
+          "metric": "node_filesystem_size",
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Plotting time",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 8,
+        "y": 20
+      },
+      "id": 36,
+      "interval": "5s",
+      "links": [],
+      "maxDataPoints": 99999,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.6",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_join(plotman_plot_tmp_usage, \"val\", \" \", \"plot_id\", \"run_status\", \"tmp_dir\", \"dst_dir\")",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{val}}",
+          "metric": "node_filesystem_size",
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Plotting space",
+      "transformations": [],
+      "type": "stat"
     },
     {
       "datasource": "Loki",
@@ -1366,6 +1775,36 @@
         }
       ],
       "title": "Plotter Logs",
+      "type": "logs"
+    },
+    {
+      "datasource": "Loki",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "id": 31,
+      "options": {
+        "dedupStrategy": "none",
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "7.5.4",
+      "targets": [
+        {
+          "expr": "{job=\"chia\"}|=\"harvester.harvester\"|=\"WARNING\"",
+          "refId": "A"
+        }
+      ],
+      "title": "Harvester Warnings",
       "type": "logs"
     }
   ],
@@ -1415,14 +1854,16 @@
             "/opt/hdd/2",
             "/opt/hdd/3",
             "/opt/hdd/4",
-            "/opt/ssd/1"
+            "/opt/ssd/1",
+            "/opt/ssd/2"
           ],
           "value": [
             "/opt/hdd/1",
             "/opt/hdd/2",
             "/opt/hdd/3",
             "/opt/hdd/4",
-            "/opt/ssd/1"
+            "/opt/ssd/1",
+            "/opt/ssd/2"
           ]
         },
         "datasource": "Prometheus",
@@ -1455,6 +1896,8 @@
           "selected": true,
           "text": [
             "nvme0n1",
+            "nvme1n1",
+            "sda",
             "sdb",
             "sdc",
             "sdd",
@@ -1462,6 +1905,8 @@
           ],
           "value": [
             "nvme0n1",
+            "nvme1n1",
+            "sda",
             "sdb",
             "sdc",
             "sdd",
@@ -1530,13 +1975,25 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-8h",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
   "timezone": "",
   "title": "Chia",
   "uid": "P-ipES9Mz",
-  "version": 9
+  "version": 38
 }
-
